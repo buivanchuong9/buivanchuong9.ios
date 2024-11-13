@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Xếp Hạng và Đánh Giá Sản Phẩm - DNU SHOES</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-image: url("https://noithatbinhminh.com.vn/wp-content/uploads/2023/09/background-san-pham-02.jpg"); /* Thay thế YOUR_IMAGE_URL_HERE bằng đường dẫn hình ảnh của bạn */
+        background-size: cover; /* Làm cho hình ảnh bao phủ toàn bộ */
+        background-position: center; /* Giữ hình ảnh ở giữa */
+        height: 100vh;
+        color: #fff;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        display: flex; /* Sử dụng flexbox để căn giữa */
+        justify-content: center; /* Căn giữa theo chiều ngang */
+        align-items: center; /* Căn giữa theo chiều dọc */
+      }
+
+      .container {
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 500px;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 28px;
+        margin-bottom: 20px;
+      }
+
+      .product-info {
+        margin-bottom: 20px;
+        font-size: 18px;
+        line-height: 1.5;
+      }
+
+      .rating {
+        margin: 20px 0;
+        display: flex; /* Sử dụng flexbox để căn giữa sao */
+        justify-content: center; /* Căn giữa các sao */
+      }
+
+      .stars {
+        cursor: pointer;
+        font-size: 30px;
+        color: #ffb400; /* Màu vàng cho sao */
+      }
+
+      .stars:hover {
+        color: #ffea00; /* Màu vàng nhạt khi di chuột */
+      }
+
+      label {
+        display: block;
+        font-size: 16px;
+        margin-top: 10px;
+      }
+
+      textarea {
+        width: 100%;
+        height: 100px;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        margin-top: 10px;
+        background-color: rgba(255, 255, 255, 0.8);
+        color: #333;
+      }
+
+      button {
+        width: 100%;
+        padding: 12px;
+        font-size: 18px;
+        color: #fff;
+        background-color: #28a745;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #218838;
+      }
+
+      .feedback {
+        margin-top: 20px;
+        font-size: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Xếp Hạng Sản Phẩm</h1>
+      <div class="product-info">
+        <p>Tên sản phẩm: Giày Thể Thao DNU</p>
+        <p>Mô tả: Giày thể thao với thiết kế hiện đại và chất lượng cao.</p>
+      </div>
+      <div class="rating">
+        <span class="stars" data-value="1">&#9733;</span>
+        <span class="stars" data-value="2">&#9733;</span>
+        <span class="stars" data-value="3">&#9733;</span>
+        <span class="stars" data-value="4">&#9733;</span>
+        <span class="stars" data-value="5">&#9733;</span>
+      </div>
+      <label for="comment">Để lại đánh giá của bạn:</label>
+      <textarea
+        id="comment"
+        placeholder="Nhập đánh giá của bạn tại đây..."
+      ></textarea>
+      <button id="submitReview">Gửi Đánh Giá</button>
+      <div id="feedback" class="feedback"></div>
+    </div>
+
+    <script>
+      const stars = document.querySelectorAll(".stars");
+      let ratingValue = 0;
+
+      stars.forEach((star) => {
+        star.addEventListener("click", () => {
+          ratingValue = star.getAttribute("data-value");
+          stars.forEach((s) => {
+            s.style.color = "#ffb400"; // Đổi màu các sao đã chọn
+          });
+          stars.forEach((s) => {
+            if (s.getAttribute("data-value") > ratingValue) {
+              s.style.color = "#ccc"; // Đổi màu các sao chưa chọn
+            }
+          });
+        });
+      });
+
+      document.getElementById("submitReview").addEventListener("click", () => {
+        const comment = document.getElementById("comment").value;
+        const feedbackDiv = document.getElementById("feedback");
+
+        if (ratingValue > 0 && comment.trim() !== "") {
+          feedbackDiv.textContent = `Cảm ơn bạn đã đánh giá ${ratingValue} sao! Đánh giá của bạn: "${comment}"`;
+          feedbackDiv.style.color = "#28a745"; // Màu xanh cho phản hồi thành công
+          document.getElementById("comment").value = ""; // Xóa nội dung ô nhập
+          ratingValue = 0; // Đặt lại giá trị đánh giá
+          stars.forEach((s) => (s.style.color = "#ccc")); // Đặt lại màu sao
+        } else {
+          feedbackDiv.textContent = "Vui lòng chọn xếp hạng và nhập đánh giá!";
+          feedbackDiv.style.color = "#dc3545"; // Màu đỏ cho thông báo lỗi
+        }
+      });
+    </script>
+  </body>
+</html>
